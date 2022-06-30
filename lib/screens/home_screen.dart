@@ -12,8 +12,10 @@ import 'package:flutter/material.dart';
 // ignore: camel_case_types
 class Home_Screen extends StatelessWidget {
   Home_Screen({Key? key}) : super(key: key);
+
   //to maintain value change like one page to other page
   final ValueNotifier<int> pageIndex = ValueNotifier(0);
+  final ValueNotifier<String> title = ValueNotifier("Messages");
 
   //button navigation bar
   //all pages list
@@ -23,6 +25,15 @@ class Home_Screen extends StatelessWidget {
     Notifications_Page(),
     Contacts_Page()
   ];
+  //for setting button navigation item selected in appbar we need
+  //a list of item like below
+  final pagesTitle = const ["Messages", "Calls", "Notifications", "Contacts"];
+
+  //for set navigation item lin body and appbar
+  void _onNavigationItemSelected(index) {
+    title.value = pagesTitle[index];
+    pageIndex.value = index;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +41,19 @@ class Home_Screen extends StatelessWidget {
       print(pageIndex.value);
     });
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: ValueListenableBuilder(
+          valueListenable: title,
+          builder: (BuildContext context, String value, _) {
+            return Text(
+              value,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            );
+          },
+        ),
+      ),
       //change state
       body: ValueListenableBuilder(
         valueListenable: pageIndex,
@@ -38,9 +62,7 @@ class Home_Screen extends StatelessWidget {
         },
       ),
       bottomNavigationBar: _BottomNavigationBar(
-        onItemSelected: (index) {
-          pageIndex.value = index;
-        },
+        onItemSelected: _onNavigationItemSelected,
       ),
     );
   }
@@ -118,7 +140,8 @@ class _NavigationBarItems extends StatelessWidget {
       required this.onTaped,
       required this.lable,
       required this.icon,
-      required this.index,  this.isSelected = false})
+      required this.index,
+      this.isSelected = false})
       : super(key: key);
 
   final ValueChanged<int> onTaped;
@@ -141,20 +164,17 @@ class _NavigationBarItems extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              icon,
-              size: 20,
-              color: isSelected? AppColors.secondary : null
-            ),
+            Icon(icon,
+                size: 20, color: isSelected ? AppColors.secondary : null),
             SizedBox(height: 8),
             Text(
               lable,
-              style: isSelected ? TextStyle(
-                fontSize: 11,
-                color: AppColors.secondary,
-                fontWeight: FontWeight.bold
-                ) 
-              : TextStyle(fontSize: 11),
+              style: isSelected
+                  ? TextStyle(
+                      fontSize: 11,
+                      color: AppColors.secondary,
+                      fontWeight: FontWeight.bold)
+                  : TextStyle(fontSize: 11),
             ),
           ],
         ),
