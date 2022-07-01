@@ -1,11 +1,13 @@
 // ignore: unnecessary_import
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, avoid_print
 
+import 'package:chat_app/helper.dart';
 import 'package:chat_app/pages/calls_page.dart';
 import 'package:chat_app/pages/contacts_page.dart';
 import 'package:chat_app/pages/messages_page.dart';
 import 'package:chat_app/pages/notifications_page.dart';
 import 'package:chat_app/theme.dart';
+import 'package:chat_app/widgets/avatar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,6 +55,12 @@ class Home_Screen extends StatelessWidget {
             );
           },
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right : 24.0),
+            child: Avatar.small(url: Helpers.randomPictureUrl()),
+          )
+        ],
       ),
       //change state
       body: ValueListenableBuilder(
