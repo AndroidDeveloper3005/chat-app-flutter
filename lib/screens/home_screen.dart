@@ -8,6 +8,7 @@ import 'package:chat_app/pages/messages_page.dart';
 import 'package:chat_app/pages/notifications_page.dart';
 import 'package:chat_app/theme.dart';
 import 'package:chat_app/widgets/avatar.dart';
+import 'package:chat_app/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -55,9 +56,20 @@ class Home_Screen extends StatelessWidget {
             );
           },
         ),
+        leadingWidth: 54,
+        leading: Align(
+          alignment: Alignment.centerRight,
+          child: IconBackground(
+            
+            icon: Icons.search,
+            onTap: () {
+              print("to do search");
+            },
+          ),
+        ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right : 24.0),
+            padding: const EdgeInsets.only(right: 24.0),
             child: Avatar.small(url: Helpers.randomPictureUrl()),
           )
         ],
