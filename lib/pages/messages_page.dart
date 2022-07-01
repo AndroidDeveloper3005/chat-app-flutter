@@ -14,9 +14,18 @@ class Message_Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: _Stories(),
+    //for custom scrol view we use sliver
+    return  CustomScrollView(
+      slivers: [
+        const SliverToBoxAdapter(
+          child: _Stories(),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate((BuildContext context, index) {
+            return const Text("data");
+          }),
+        ),
+      ],
     );
   }
 }
@@ -33,9 +42,9 @@ class _Stories extends StatelessWidget {
         height: 134,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children:  [
+          children: [
             const Padding(
-              padding: EdgeInsets.only(left: 16.0,top: 8.0,bottom: 16.0),
+              padding: EdgeInsets.only(left: 16.0, top: 8.0, bottom: 16.0),
               child: Text(
                 "Stories",
                 style: TextStyle(
@@ -46,33 +55,24 @@ class _Stories extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, index) {
-                  final faker = Faker();
-                  return SizedBox(
-                    width: 60,
-                    child: _StoryCard(
-                      storyData: StoryData(
-                        name: faker.person.name(),
-                         url: Helpers.randomPictureUrl()
-                         )
-                      
-                      ),
-                  );
-                  
-                }
-                
-                ),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, index) {
+                    final faker = Faker();
+                    return SizedBox(
+                      width: 60,
+                      child: _StoryCard(
+                          storyData: StoryData(
+                              name: faker.person.name(),
+                              url: Helpers.randomPictureUrl())),
+                    );
+                  }),
             ),
-              
-              
           ],
         ),
       ),
     );
   }
 }
-
 
 class _StoryCard extends StatelessWidget {
   const _StoryCard({Key? key, required this.storyData}) : super(key: key);
@@ -81,7 +81,7 @@ class _StoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
