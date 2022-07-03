@@ -12,6 +12,8 @@ import 'package:chat_app/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/action_button.dart';
+
 // ignore: camel_case_types
 class Home_Screen extends StatelessWidget {
   Home_Screen({Key? key}) : super(key: key);
@@ -143,6 +145,16 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
                 isSelected: (selectedIndex == 1),
                 onTaped: handleitemselected,
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal : 8.0),
+                child: GlowingActionButton(
+                  color: AppColors.secondary,
+                  icon: CupertinoIcons.add,
+                  onPressed: () {
+                    print("add button");
+                  },
+                ),
+              ),
               _NavigationBarItems(
                 index: 2,
                 lable: "Notifications",
@@ -192,7 +204,8 @@ class _NavigationBarItems extends StatelessWidget {
         // print(index);
       },
       child: SizedBox(
-        height: 70,
+        width: 70,
+        height: 65,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
