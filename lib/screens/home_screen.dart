@@ -6,12 +6,13 @@ import 'package:chat_app/pages/calls_page.dart';
 import 'package:chat_app/pages/contacts_page.dart';
 import 'package:chat_app/pages/messages_page.dart';
 import 'package:chat_app/pages/notifications_page.dart';
+import 'package:chat_app/screens/profile_screen.dart';
 import 'package:chat_app/theme.dart';
 import 'package:chat_app/widgets/avatar.dart';
 import 'package:chat_app/widgets/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:chat_app/app.dart';
 import '../widgets/action_button.dart';
 
 // ignore: camel_case_types
@@ -24,8 +25,8 @@ class Home_Screen extends StatelessWidget {
 
   //button navigation bar
   //all pages list
-  final pages = const [
-    Message_Page(),
+  final pages =  [
+    Messages_Page(),
     Calls_Page(),
     Notifications_Page(),
     Contacts_Page()
@@ -75,7 +76,15 @@ class Home_Screen extends StatelessWidget {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 24.0),
-            child: Avatar.small(url: Helpers.randomPictureUrl()),
+            child: Hero(
+              tag:"hero-profile-picture", 
+              child: Avatar.small(
+                url: context.currentUserImage,
+                onTap: () {
+                  Navigator.of(context).push(ProfileScreen.route);
+                },
+              ),
+            ),
           )
         ],
       ),
@@ -146,7 +155,7 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
                 onTaped: handleitemselected,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal : 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: GlowingActionButton(
                   color: AppColors.secondary,
                   icon: CupertinoIcons.add,
